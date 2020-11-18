@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'first.ui'
@@ -9,30 +10,56 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import functions
+
+import sys
+import tkinter
+
+root = tkinter.Tk()
+#variables
+#window
+width_window = root.winfo_screenwidth()
+height_window = root.winfo_screenheight()
+
+#tools
+width_tools = width_window // 4
+height_tools = height_window 
+x_tools = width_window // 40
+y_tools = height_window // 25
+
+#detail
+width_details = width_window // 5 * 4
+height_details = height_tools
+x_details = x_tools + width_tools + (width_window // 15)
+y_details = y_tools 
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(667, 364)
+        #MainWindow.resize(width_window, height_window)
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(10, 10, 191, 321))
-        self.groupBox.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.groupBox.setObjectName("groupBox")
+        MainWindow.setCentralWidget(self.centralwidget)
+
+        #groupBox_tool
+        self.groupBox_tool = QtWidgets.QGroupBox(self.centralwidget)
+        self.groupBox_tool.setGeometry(QtCore.QRect(x_tools, y_tools, width_tools, height_tools))
+        self.groupBox_tool.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.groupBox_tool.setObjectName("groupBox_tool")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(380, 130, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_2.setGeometry(QtCore.QRect(220, 20, 431, 311))
-        self.groupBox_2.setObjectName("groupBox_2")
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.groupBox_detail = QtWidgets.QGroupBox(self.centralwidget)
+        self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
+        self.groupBox_detail.setObjectName("groupBox_detail")
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 667, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -54,20 +81,20 @@ class Ui_MainWindow(object):
         self.actionSave.setObjectName("actionSave")
         self.actionSave_as = QtWidgets.QAction(MainWindow)
         self.actionSave_as.setObjectName("actionSave_as")
-        self.actionNew_2 = QtWidgets.QAction(MainWindow)
-        self.actionNew_2.setObjectName("actionNew_2")
+        self.actionNew = QtWidgets.QAction(MainWindow)
+        self.actionNew.setObjectName("actionNew")
         self.actionOpen_file = QtWidgets.QAction(MainWindow)
         self.actionOpen_file.setObjectName("actionOpen_file")
-        self.actionOpen_file_2 = QtWidgets.QAction(MainWindow)
-        self.actionOpen_file_2.setObjectName("actionOpen_file_2")
+        self.actionOpen_file = QtWidgets.QAction(MainWindow)
+        self.actionOpen_file.setObjectName("actionOpen_file")
         self.actionOpen_other = QtWidgets.QAction(MainWindow)
         self.actionOpen_other.setObjectName("actionOpen_other")
         self.actionBank_balances = QtWidgets.QAction(MainWindow)
         self.actionBank_balances.setObjectName("actionBank_balances")
         self.actionDocuments = QtWidgets.QAction(MainWindow)
         self.actionDocuments.setObjectName("actionDocuments")
-        self.actionIndustry = QtWidgets.QAction(MainWindow)
-        self.actionIndustry.setObjectName("actionIndustry")
+        self.actionCrafts_and_Consumption = QtWidgets.QAction(MainWindow)
+        self.actionCrafts_and_Consumption.setObjectName("actionCrafts_and_Consumption")
         self.actionChecks_issued = QtWidgets.QAction(MainWindow)
         self.actionChecks_issued.setObjectName("actionChecks_issued")
         self.actionExpenses = QtWidgets.QAction(MainWindow)
@@ -89,8 +116,8 @@ class Ui_MainWindow(object):
         self.actionCustomers_Advice = QtWidgets.QAction(MainWindow)
         self.actionCustomers_Advice.setObjectName("actionCustomers_Advice")
         self.menuOpen.addAction(self.actionOpen_other)
-        self.menuOpen.addAction(self.actionOpen_file_2)
-        self.menuFile.addAction(self.actionNew_2)
+        self.menuOpen.addAction(self.actionOpen_file)
+        self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.menuOpen.menuAction())
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_as)
@@ -99,7 +126,7 @@ class Ui_MainWindow(object):
         self.menuReccomendation.addAction(self.actionEmployees_Advice)
         self.menuReccomendation.addAction(self.actionCustomers_Advice)
         self.menuReports.addAction(self.actionDocuments)
-        self.menuReports.addAction(self.actionIndustry)
+        self.menuReports.addAction(self.actionCrafts_and_Consumption)
         self.menuLists.addAction(self.actionBank_balances)
         self.menuLists.addAction(self.menuReports.menuAction())
         self.menuLists.addAction(self.actionChecks_issued)
@@ -118,10 +145,12 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.groupBox.setTitle(_translate("MainWindow", "Tools"))
+        #groupBox_text
+        self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
         self.label.setText(_translate("MainWindow", "No ditail"))
-        self.groupBox_2.setTitle(_translate("MainWindow", "Ditail"))
+        self.groupBox_detail.setTitle(_translate("MainWindow", "Ditail"))
+
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuOpen.setTitle(_translate("MainWindow", "Open"))
         self.menuReccomendation.setTitle(_translate("MainWindow", "Advice and Predicts"))
@@ -133,19 +162,19 @@ class Ui_MainWindow(object):
         self.actionSave.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.actionSave_as.setText(_translate("MainWindow", "Save as"))
         self.actionSave_as.setStatusTip(_translate("MainWindow", "Save file as"))
-        self.actionNew_2.setText(_translate("MainWindow", "New"))
-        self.actionNew_2.setStatusTip(_translate("MainWindow", "New file"))
-        self.actionNew_2.setShortcut(_translate("MainWindow", "Ctrl+N"))
+        self.actionNew.setText(_translate("MainWindow", "New"))
+        self.actionNew.setStatusTip(_translate("MainWindow", "New file"))
+        self.actionNew.setShortcut(_translate("MainWindow", "Ctrl+N"))
         self.actionOpen_file.setText(_translate("MainWindow", "Open file"))
-        self.actionOpen_file_2.setText(_translate("MainWindow", "Open file"))
-        self.actionOpen_file_2.setStatusTip(_translate("MainWindow", "Open main file"))
-        self.actionOpen_file_2.setShortcut(_translate("MainWindow", "Ctrl+Shift+O"))
+        self.actionOpen_file.setText(_translate("MainWindow", "Open file"))
+        self.actionOpen_file.setStatusTip(_translate("MainWindow", "Open main file"))
+        self.actionOpen_file.setShortcut(_translate("MainWindow", "Ctrl+Shift+O"))
         self.actionOpen_other.setText(_translate("MainWindow", "Open other"))
         self.actionOpen_other.setStatusTip(_translate("MainWindow", "Open partial file"))
         self.actionOpen_other.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionBank_balances.setText(_translate("MainWindow", "Bank balances"))
         self.actionDocuments.setText(_translate("MainWindow", "Documents"))
-        self.actionIndustry.setText(_translate("MainWindow", "Crafts and Consumption"))
+        self.actionCrafts_and_Consumption.setText(_translate("MainWindow", "Crafts and Consumption"))
         self.actionChecks_issued.setText(_translate("MainWindow", "Checks issued"))
         self.actionExpenses.setText(_translate("MainWindow", "Expenses"))
         self.actionAssets.setText(_translate("MainWindow", "Assets"))
@@ -157,12 +186,104 @@ class Ui_MainWindow(object):
         self.actionEmployees_Advice.setText(_translate("MainWindow", "Employees"))
         self.actionCustomers_Advice.setText(_translate("MainWindow", "Customers"))
 
+        #click_menu
+
+        #file
+        self.actionNew.triggered.connect(lambda: self.functionNew())
+        self.actionOpen_other.triggered.connect(lambda: self.functionOpen_other())
+        self.actionOpen_file.triggered.connect(lambda: self.functionOpen_file())
+        self.actionSave.triggered.connect(lambda: self.functionSave())
+        self.actionSave_as.triggered.connect(lambda: self.functionSave_as())
+        #lists
+        self.actionBank_balances.triggered.connect(lambda: self.functionBank_balances())
+        self.actionDocuments.triggered.connect(lambda: self.functionDucuments())
+        self.actionCrafts_and_Consumption.triggered.connect(lambda: self.functionCraft_and_Consumption())
+        self.actionChecks_issued.triggered.connect(lambda: self.functionChecks_issued())
+        self.actionExpenses.triggered.connect(lambda: self.functionExpenses())
+        self.actionAssets.triggered.connect(lambda: self.functionAssert())
+        self.actionStocks.triggered.connect(lambda: self.functionStocks())
+        self.actionEmployees.triggered.connect(lambda: self.functionEmployees())
+        self.actionCustomers.triggered.connect(lambda: self.functionCustomers())
+        #advice and predict
+        self.actionBank_balances_Advice.triggered.connect(lambda: self.functionBank_balances_Advice())
+        self.actionStocks_Advice.triggered.connect(lambda: self.functionStocks_Advice())
+        self.actionEmployees_Advice.triggered.connect(lambda: self.functionEmployees_Advice())
+        self.actionCustomers_Advice.triggered.connect(lambda: self.functionCustomers_Advice())
+
+        #actions of click
+
+        #file
+    def functionNew(self):
+        print('New clicked!')
+        pass
+
+    def functionOpen_other(self):
+        pass
+
+    def functionOpen_file(self):
+        print('Open file clicked')
+        address = functions.open_file()
+        print(address)
+        pass
+
+    def functionSave(self):
+        pass
+
+    def functionSave_as(self):
+        pass
+    #lists
+    def functionBank_balances(self):
+        pass
+
+    def functionDucuments(self):
+        pass
+
+    def functionCraft_and_Consumption(self):
+        pass
+
+    def functionChecks_issued(self):
+        pass
+
+    def functionExpenses(self):
+        pass
+
+    def functionAssert(self):
+        pass
+
+    def functionStocks(self):
+        pass
+
+    def functionEmployees(self):
+        pass
+
+    def functionCustomers(self):
+        pass
+    #advice and predict
+    def functionBank_balances_Advice(self):
+        pass
+
+    def functionStocks_Advice(self):
+        pass
+
+    def functionEmployees_Advice(self):
+        pass
+
+    def functionCustomers_Advice(self):
+        pass
+
+
+
 
 if __name__ == "__main__":
-    import sys
+    
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    MainWindow.show()
+    MainWindow.showMaximized()
+
     sys.exit(app.exec_())
+
+   
+    
+
