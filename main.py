@@ -48,16 +48,25 @@ class Ui_MainWindow(object):
         self.groupBox_tool.setGeometry(QtCore.QRect(x_tools, y_tools, width_tools, height_tools))
         self.groupBox_tool.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.groupBox_tool.setObjectName("groupBox_tool")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(380, 130, 91, 51))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
+
         self.groupBox_detail = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
         self.groupBox_detail.setObjectName("groupBox_detail")
 
+        self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
+        self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, width_details // 2 - 20, 91, 51))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.label_detail.setFont(font)
+        self.label_detail.setObjectName("label_detail")
+
+        self.label_tool = QtWidgets.QLabel(self.groupBox_tool)
+        self.label_tool.setGeometry(QtCore.QRect(width_tools // 2 - 15, width_tools // 2 - 10, 91, 51))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.label_tool.setFont(font)
+        self.label_tool.setObjectName("label_tool")
+        
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 21))
         self.menubar.setObjectName("menubar")
@@ -147,8 +156,11 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         #groupBox_text
         self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
-        self.label.setText(_translate("MainWindow", "No ditail"))
-        self.groupBox_detail.setTitle(_translate("MainWindow", "Ditail"))
+        self.label_detail.setText(_translate("MainWindow", "No detail"))
+        self.label_detail.adjustSize()
+        self.label_detail.setText(_translate("MainWindow", "No tool"))
+        self.label_tool.adjustSize()
+        self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
 
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -212,7 +224,8 @@ class Ui_MainWindow(object):
 
         #actions of click
 
-        #file
+
+    #file
     def functionNew(self):
         print('New clicked!')
         pass
