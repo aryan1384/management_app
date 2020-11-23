@@ -20,6 +20,7 @@ root = tkinter.Tk()
 #window
 width_window = root.winfo_screenwidth()
 height_window = root.winfo_screenheight()
+#print(width_window , height_window)
 
 #tools
 width_tools = width_window // 4
