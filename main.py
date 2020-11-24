@@ -24,12 +24,12 @@ height_window = root.winfo_screenheight()
 
 #tools
 width_tools = width_window // 4
-height_tools = height_window 
+height_tools = height_window - (height_window // 7)
 x_tools = width_window // 40
 y_tools = height_window // 25
 
 #detail
-width_details = width_window // 5 * 4
+width_details = width_window // 5 * 3
 height_details = height_tools
 x_details = x_tools + width_tools + (width_window // 15)
 y_details = y_tools 
@@ -38,7 +38,7 @@ y_details = y_tools
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        #MainWindow.resize(width_window, height_window)
+        MainWindow.resize(width_window, height_window)
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -55,14 +55,14 @@ class Ui_MainWindow(object):
         self.groupBox_detail.setObjectName("groupBox_detail")
 
         self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
-        self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, width_details // 2 - 20, 91, 51))
+        self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_detail.setFont(font)
         self.label_detail.setObjectName("label_detail")
 
         self.label_tool = QtWidgets.QLabel(self.groupBox_tool)
-        self.label_tool.setGeometry(QtCore.QRect(width_tools // 2 - 15, width_tools // 2 - 10, 91, 51))
+        self.label_tool.setGeometry(QtCore.QRect(width_tools // 2 - 45, height_tools // 2 - 20, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_tool.setFont(font)
@@ -157,10 +157,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         #groupBox_text
         self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
+        self.label_tool.setText(_translate("MainWindow", "No tool"))
+        self.label_tool.adjustSize()
         self.label_detail.setText(_translate("MainWindow", "No detail"))
         self.label_detail.adjustSize()
-        self.label_detail.setText(_translate("MainWindow", "No tool"))
-        self.label_tool.adjustSize()
         self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
 
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -294,10 +294,7 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    MainWindow.showMaximized()
-
-    sys.exit(app.exec_())
-
-   
+    #MainWindow.showMaximized()
     
-
+    MainWindow.show()
+    sys.exit(app.exec_())
