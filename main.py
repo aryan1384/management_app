@@ -10,6 +10,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
+
 import functions
 
 import sys
@@ -44,7 +46,10 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         MainWindow.setCentralWidget(self.centralwidget)
 
-        #groupBox_tool
+        #groupBox
+        '''formLayout =QFormLayout()'''
+
+
         self.groupBox_tool = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_tool.setGeometry(QtCore.QRect(x_tools, y_tools, width_tools, height_tools))
         self.groupBox_tool.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
@@ -54,6 +59,15 @@ class Ui_MainWindow(object):
         self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
         self.groupBox_detail.setObjectName("groupBox_detail")
 
+        '''self.groupBox_detail.setLayout(formLayout)
+        scroll = QScrollArea()
+        scroll.setWidget(self.groupBox_detail)
+        scroll.setWidgetResizable(True)
+        scroll.setFixedHeight(400)
+        layout = QVBoxLayout()
+        layout.addWidget(scroll)'''
+
+        #label in groupBox
         self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
         self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
         font = QtGui.QFont()
@@ -226,6 +240,11 @@ class Ui_MainWindow(object):
         #actions of click
 
 
+    def scroll_tools(self):
+        
+
+        pass
+
     #file
     def functionNew(self):
         print('New clicked!')
@@ -245,7 +264,9 @@ class Ui_MainWindow(object):
 
     def functionSave_as(self):
         pass
+
     #lists
+
     def functionBank_balances(self):
         pass
 
