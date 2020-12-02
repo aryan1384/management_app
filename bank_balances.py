@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import functions
-from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog
 
 
 import sys
@@ -25,7 +25,10 @@ height_details = height_tools
 x_details = x_tools + width_tools + (width_window // 15)
 y_details = y_tools 
 
+y_buttons = 50
+
 class Ui_MainWindow(object):
+    buttons = []
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(width_window, height_window)
@@ -67,12 +70,20 @@ class Ui_MainWindow(object):
         #layout = QVBoxLayout()
         #layout.addWidget(scroll)
 
-        self.label_tool = QtWidgets.QLabel(self.groupBox_tool)
+        '''self.label_tool = QtWidgets.QLabel(self.groupBox_tool)
         self.label_tool.setGeometry(QtCore.QRect(width_tools // 2 - 45, height_tools // 2 - 20, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_tool.setFont(font)
-        self.label_tool.setObjectName("label_tool")
+        self.label_tool.setObjectName("label_tool")'''
+
+        self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
+        y_addFile_button = len(self.buttons)*70 + 50
+        self.addFile_button.setGeometry(QtCore.QRect(70, y_addFile_button, 111, 51))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.addFile_button.setFont(font)
+        self.addFile_button.setObjectName("addFile_button")
         
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 21))
@@ -171,8 +182,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         #groupBox_text
         self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
-        self.label_tool.setText(_translate("MainWindow", "No tool"))
-        self.label_tool.adjustSize()
+        self.addFile_button.setText(_translate("MainWindow", "+"))
+
         self.label_detail.setText(_translate("MainWindow", "No detail"))
         self.label_detail.adjustSize()
         self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
@@ -213,7 +224,8 @@ class Ui_MainWindow(object):
         self.actionEmployees_Advice.setText(_translate("MainWindow", "Employees"))
         self.actionCustomers_Advice.setText(_translate("MainWindow", "Customers"))
 
-        #click_menu
+        #click_addFile
+        self.addFile_button.clicked.connect(self.addbutton)
 
         #file
         self.actionNew.triggered.connect(lambda: self.functionNew())
@@ -241,6 +253,28 @@ class Ui_MainWindow(object):
 
     def functionSave_as(self):
         pass
+
+    def addbutton(self):
+        print('hello')
+        option = QFileDialog.Options()
+        widget = QWidget()
+        myfile = QFileDialog.getOpenFileName(widget,'save file','default.jpg','All Files (*.*)', options = option)
+        
+        #return myfile[0]
+        global y_buttons
+        self.buttons.append(QtWidgets.QPushButton(self.groupBox_tool))
+         
+
+        y_buttons = 50
+        for i in range(len(self.buttons)):
+            self.buttons[i].setGeometry(QtCore.QRect(70, y_buttons, 111, 51))
+            y_buttons += 70
+            font = QtGui.QFont()
+            font.setPointSize(20)
+            self.buttons[i].setFont(font)
+            self.buttons[i].setObjectName("button1")
+            _translate = QtCore.QCoreApplication.translate
+            self.button[i].setText(_translate("MainWindow", "X"))
 
 if __name__ == "__main__":
     

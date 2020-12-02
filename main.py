@@ -16,6 +16,7 @@ import functions
 
 import sys
 import tkinter
+import pandas as pd
 
 root = tkinter.Tk()
 #variables
@@ -241,8 +242,6 @@ class Ui_MainWindow(object):
 
 
     def scroll_tools(self):
-        
-
         pass
 
     #file
