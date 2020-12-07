@@ -26,6 +26,13 @@ x_details = x_tools + width_tools + (width_window // 15)
 y_details = y_tools 
 
 y_buttons = 50
+class button(object):
+    detail = ""
+    text = ""
+    def show_text(self):
+        pass
+    
+
 
 class Ui_MainWindow(object):
     buttons = []
@@ -255,26 +262,12 @@ class Ui_MainWindow(object):
         pass
 
     def addbutton(self):
-        print('hello')
+        #print('hello')
         option = QFileDialog.Options()
         widget = QWidget()
         myfile = QFileDialog.getOpenFileName(widget,'save file','default.jpg','All Files (*.*)', options = option)
         
-        #return myfile[0]
-        global y_buttons
-        self.buttons.append(QtWidgets.QPushButton(self.groupBox_tool))
-         
-
-        y_buttons = 50
-        for i in range(len(self.buttons)):
-            self.buttons[i].setGeometry(QtCore.QRect(70, y_buttons, 111, 51))
-            y_buttons += 70
-            font = QtGui.QFont()
-            font.setPointSize(20)
-            self.buttons[i].setFont(font)
-            self.buttons[i].setObjectName("button1")
-            _translate = QtCore.QCoreApplication.translate
-            self.button[i].setText(_translate("MainWindow", "X"))
+        
 
 if __name__ == "__main__":
     
