@@ -2,9 +2,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import functions
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog
 
-
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import pyqtSlot
 import sys
 import tkinter 
+import pandas as pd
 
 root = tkinter.Tk()
 #variables
@@ -266,7 +269,76 @@ class Ui_MainWindow(object):
         option = QFileDialog.Options()
         widget = QWidget()
         myfile = QFileDialog.getOpenFileName(widget,'save file','default.jpg','All Files (*.*)', options = option)
-        
+        #print(myfile[0] , 'this is')
+
+        #self.create_button()
+        text_file_ = open(myfile[0] , 'r')
+        text_file = text_file_.readlines()
+        text_file_.close()
+        print(text_file)
+        self.show_text(text_file)
+        detail = pd.read_csv(myfile[0])
+        #self.show_table(detail)
+
+
+    def show_text(self,text_file):
+        mytext = ''
+        for i in text_file:
+            mytext += i
+        self.label_detail.setText(mytext)
+        self.label_detail.setGeometry(QtCore.QRect(20, 20, 450, 450))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_detail.setFont(font)
+        self.label_detail.adjustSize()
+
+    def show_table(self,detail):
+        self.createTable(detail)
+
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.tableWidget) 
+        self.setLayout(self.layout) 
+
+        self.show()
+
+    def createTable(self,detail):
+       # Create table
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(2)
+        self.tableWidget.setColumnCount(5)
+        for i in range(2):
+            for j in range(5):
+                self.tableWidget.setItem(i,j, QTableWidgetItem(detail.loc[i][j]))
+                print(detail.loc[i][j])        
+        self.tableWidget.move(0,0)
+
+        # table selection change
+        #self.tableWidget.doubleClicked.connect(self.on_click)
+
+
+    def create_button(self):
+        self.num = 2
+
+        #creating a button to be clicked
+        '''button1 = QPushButton('Button-1', self)
+        button1.move(100, 70)'''
+        self.addFile_button.clicked.connect(self.on_click)     
+
+        self.layout = QVBoxLayout(self.groupBox_tool) 
+        self.layout.addWidget(self.addFile_button)        
+
+    #@pyqtSlot()
+    def on_click(self):
+        print('Button-{} will be created'.format(self.num))
+        button2 = QPushButton('Button-{}'.format(self.num), self.groupBox_tool)
+        #self.another_button = QtWidgets.QPushButton(self.groupBox_tool)
+        button2.clicked.connect(lambda : print(button2.text()))
+#        button2.move(100, 200)
+
+        self.layout.addWidget(button2)
+        self.num += 1
+
+
         
 
 if __name__ == "__main__":
