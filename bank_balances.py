@@ -28,15 +28,16 @@ x_details = x_tools + width_tools + (width_window // 15)
 y_details = y_tools 
 
 y_buttons = 50
-class button:
+
+buttons = []
+'''class button:
     detail = ""
-    text = ""
+    text = ""'''
     
     
 
 
 class Ui_MainWindow(object):
-    buttons = []
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(width_window, height_window)
@@ -279,7 +280,7 @@ class Ui_MainWindow(object):
         self.show_text(text_file)
         new_button = button()
         new_button.detail = myfile[0]
-        buttons.append(new_button)
+        self.buttons.append(new_button)
         #a = input()
         print('Button-{} will be created'.format(self.num))
         button2 = QPushButton('{}'.format(self.num-1) , self.groupBox_tool)

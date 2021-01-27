@@ -1,0 +1,6 @@
+X
+date     | orgin  | destination  | change in money | account  | description
+1/1/2020    us        mr.y          -1000000             10000000     buy food
+3/1/2020    us        mr.y          -500000               9500000      the rest of food
+1/1/2020    Z shop    us           +500000              10000000     sell craft
+1/1/2020    A shop    us           +2000000             12000000     sell craft
