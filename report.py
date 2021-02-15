@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGr
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
-
+from PIL import Image
+import os
 import sys
 import tkinter 
 
@@ -256,6 +257,10 @@ class Ui_MainWindow(object):
     def functionOpen_other(self):
         pass
 
+    def show_picture(self,img):
+        self.label_detail.setPixmap(QtGui.QPixmap(img))
+        self.label_detail.setGeometry(QtCore.QRect(0, 0, width_details, height_details))
+
     def functionOpen_file(self):
         print('Open file clicked')
         address = functions.open_file()
@@ -271,16 +276,16 @@ class Ui_MainWindow(object):
     def addbutton(self):
         option = QFileDialog.Options()
         widget = QWidget()
-        myfile = QFileDialog.getOpenFileName(widget,'save file','default.txt','All Files (*.*)', options = option)
-        text_file_ = open(myfile[0] , 'r')
-        text_file = text_file_.readlines()
-        text_file_.close()
+        myfile = QFileDialog.getOpenFileName(widget,'open file','default.jpg','JPEG (*.jpg;*jpeg;*.jpe;*.jfif)', options = option)
+        #img = Image.open(myfile[0])
+        img = myfile[0]
+        
         #print(text_file)
-        self.show_text(text_file)
-        self.button_file.append(text_file)
+        self.show_picture(img)
+        self.button_file.append(img)
         print('Button-{} will be created'.format(self.num))
         button2 = QPushButton(str(self.num) , self.groupBox_tool)
-        button2.clicked.connect(lambda : self.show_text(self.button_file[int(button2.text()) - 1]))
+        button2.clicked.connect(lambda : self.show_picture(self.button_file[int(button2.text()) - 1]))
 #        button2.move(100, 200)
         self.layout.addWidget(button2)
         self.num += 1
@@ -299,8 +304,11 @@ class Ui_MainWindow(object):
         self.label_detail.adjustSize()
         
     def show_picture(self,img):
+        #img.save("trash.jpg")
         self.label_detail.setPixmap(QtGui.QPixmap(img))
-        self.label_detail.setGeometry(QtCore.QRect(x_details, y_tools, width_tools, height_details))
+        self.label_detail.setGeometry(QtCore.QRect(0, 0, width_tools, height_details))
+        #os.remove('trash.jpg')
+        self.label_detail.adjustSize()
 
 if __name__ == "__main__":
     
