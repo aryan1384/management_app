@@ -47,7 +47,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         MainWindow.setCentralWidget(self.centralwidget)
 
-        #groupBox
+        #groupBox --------------------------------------------------
         '''formLayout =QFormLayout()'''
 
 
@@ -68,7 +68,8 @@ class Ui_MainWindow(object):
         layout = QVBoxLayout()
         layout.addWidget(scroll)'''
 
-        #label in groupBox
+        #label in groupBox --------------------------------------------
+
         self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
         self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
         font = QtGui.QFont()
@@ -82,7 +83,9 @@ class Ui_MainWindow(object):
         font.setPointSize(16)
         self.label_tool.setFont(font)
         self.label_tool.setObjectName("label_tool")
-        
+
+        #menu   ------------------------------------------------------
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 21))
         self.menubar.setObjectName("menubar")
@@ -170,7 +173,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        #groupBox_text
+        
+        #groupBox_text ------------------------------------------------
+
         self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
         self.label_tool.setText(_translate("MainWindow", "No tool"))
         self.label_tool.adjustSize()
@@ -308,13 +313,13 @@ class Ui_MainWindow(object):
 
 
 
-if __name__ == "__main__":
+
     
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    #MainWindow.showMaximized()
+app = QtWidgets.QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+ui = Ui_MainWindow()
+ui.setupUi(MainWindow)
+#MainWindow.showMaximized()
     
-    MainWindow.show()
-    sys.exit(app.exec_())
+MainWindow.show()
+sys.exit(app.exec_())
