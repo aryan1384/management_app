@@ -126,8 +126,8 @@ class Ui_MainWindow(object):
         self.actionOpen_file.setObjectName("actionOpen_file")
         self.actionOpen_file = QtWidgets.QAction(MainWindow)
         self.actionOpen_file.setObjectName("actionOpen_file")
-        self.actionOpen_other = QtWidgets.QAction(MainWindow)
-        self.actionOpen_other.setObjectName("actionOpen_other")
+        #self.actionOpen_other = QtWidgets.QAction(MainWindow)
+        #self.actionOpen_other.setObjectName("actionOpen_other")
         self.actionBank_balances = QtWidgets.QAction(MainWindow)
         self.actionBank_balances.setObjectName("actionBank_balances")
         self.actionDocuments = QtWidgets.QAction(MainWindow)
@@ -154,7 +154,7 @@ class Ui_MainWindow(object):
         self.actionEmployees_Advice.setObjectName("actionEmployees_Advice")
         self.actionCustomers_Advice = QtWidgets.QAction(MainWindow)
         self.actionCustomers_Advice.setObjectName("actionCustomers_Advice")
-        self.menuOpen.addAction(self.actionOpen_other)
+        #self.menuOpen.addAction(self.actionOpen_other)
         self.menuOpen.addAction(self.actionOpen_file)
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.menuOpen.menuAction())
@@ -219,9 +219,9 @@ class Ui_MainWindow(object):
         self.actionOpen_file.setText(_translate("MainWindow", "Open file"))
         self.actionOpen_file.setStatusTip(_translate("MainWindow", "Open main file"))
         self.actionOpen_file.setShortcut(_translate("MainWindow", "Ctrl+Shift+O"))
-        self.actionOpen_other.setText(_translate("MainWindow", "Open other"))
-        self.actionOpen_other.setStatusTip(_translate("MainWindow", "Open partial file"))
-        self.actionOpen_other.setShortcut(_translate("MainWindow", "Ctrl+O"))
+        #self.actionOpen_other.setText(_translate("MainWindow", "Open other"))
+        #self.actionOpen_other.setStatusTip(_translate("MainWindow", "Open partial file"))
+        #self.actionOpen_other.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionBank_balances.setText(_translate("MainWindow", "Bank balances"))
         self.actionDocuments.setText(_translate("MainWindow", "Documents"))
         self.actionCrafts_and_Consumption.setText(_translate("MainWindow", "Crafts and Consumption"))
@@ -243,7 +243,7 @@ class Ui_MainWindow(object):
 
         #file
         self.actionNew.triggered.connect(lambda: self.functionNew())
-        self.actionOpen_other.triggered.connect(lambda: self.functionOpen_other())
+        #self.actionOpen_other.triggered.connect(lambda: self.functionOpen_other())
         self.actionOpen_file.triggered.connect(lambda: self.functionOpen_file())
         self.actionSave.triggered.connect(lambda: self.functionSave())
         self.actionSave_as.triggered.connect(lambda: self.functionSave_as())
@@ -253,8 +253,8 @@ class Ui_MainWindow(object):
         print('New clicked!')
         pass
 
-    def functionOpen_other(self):
-        pass
+    '''def functionOpen_other(self):
+        pass'''
 
     def functionOpen_file(self):
         print('Open file clicked')
