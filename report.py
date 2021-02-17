@@ -305,10 +305,17 @@ class Ui_MainWindow(object):
         
     def show_picture(self,img):
         #img.save("trash.jpg")
-        self.label_detail.setPixmap(QtGui.QPixmap(img))
-        self.label_detail.setGeometry(QtCore.QRect(0, 0, width_tools, height_details))
-        #os.remove('trash.jpg')
-        self.label_detail.adjustSize()
+        image = Image.open(img)
+        width_img, height_img = image.size
+        while width_img > width_details or height_img > height_details:
+            image = image.resize((int(width_img // 1.05), int(height_img // 1.05)))
+            width_img, height_img = image.size
+        image.save("trash.jpg")    
+        #print(width_img, height_img)
+        self.label_detail.setPixmap(QtGui.QPixmap("trash.jpg"))
+        self.label_detail.setGeometry(QtCore.QRect(0, 0, width_img ,height_img))
+        os.remove('trash.jpg')
+        #self.label_detail.adjustSize()
 
 if __name__ == "__main__":
     
