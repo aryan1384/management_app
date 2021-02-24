@@ -4,10 +4,9 @@ from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGr
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QTableWidget, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
-
+import pandas as pd
 import sys
 import tkinter 
-import pandas as pd
 
 root = tkinter.Tk()
 #variables
@@ -61,21 +60,20 @@ class Ui_MainWindow(object):
         self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
         self.groupBox_detail.setObjectName("groupBox_detail")
 
-        #table ---------------------------------------------------
-        self.createTable()
-        self.layout_table = QVBoxLayout(self.groupBox_detail)
-        self.layout_table.addWidget(self.tableWidget) 
-        self.setLayout(self.layout_table) 
-
-        # Show widget
-        self.show()
-
         '''self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
         self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_detail.setFont(font)
         self.label_detail.setObjectName("label_detail")'''
+
+        self.show_table("information/Expences/X.csv")
+
+        # Add box layout, add table to box layout and add box layout to widget
+        self.layout = QVBoxLayout(self.groupBox_detail)
+        self.layout.addWidget(self.tableWidget) 
+        #self.setLayout(self.layout) 
+
 
         #formLayout =QFormLayout()
         #labelLis = []
@@ -208,7 +206,7 @@ class Ui_MainWindow(object):
 
         #self.label_detail.setText(_translate("MainWindow", "No detail"))
         #self.label_detail.adjustSize()
-        #self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
+        self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
 
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -281,19 +279,19 @@ class Ui_MainWindow(object):
     def addbutton(self):
         option = QFileDialog.Options()
         widget = QWidget()
-        myfile = QFileDialog.getOpenFileName(widget,'open file','default.csv','CSV UTF-8 (Comma delimited)', options = option)
-        #text_file_ = open(myfile[0] , 'r')
-        #text_file = text_file_.readlines()
-        #text_file_.close()
+        myfile = QFileDialog.getOpenFileName(widget,'save file','default.txt','All Files (*.*)', options = option)
+        text_file_ = open(myfile[0] , 'r')
+        text_file = text_file_.readlines()
+        text_file_.close()
         #print(text_file)
-        #self.show_text(text_file)
-        '''self.button_file.append(text_file)
+        self.show_text(text_file)
+        self.button_file.append(text_file)
         print('Button-{} will be created'.format(self.num))
         button2 = QPushButton(str(self.num) , self.groupBox_tool)
         button2.clicked.connect(lambda : self.show_text(self.button_file[int(button2.text()) - 1]))
 #        button2.move(100, 200)
         self.layout.addWidget(button2)
-        self.num += 1'''
+        self.num += 1
         
 
     def show_text(self,text_file):
@@ -308,25 +306,28 @@ class Ui_MainWindow(object):
         self.label_detail.setFont(font)
         self.label_detail.adjustSize()
 
-    def createTable(self):
-       # Create table
+    def show_table(self, address):
+        # Create table
+        self.info = pd.read_csv(address)
         self.tableWidget = QTableWidget()
         self.tableWidget.setRowCount(2)
         self.tableWidget.setColumnCount(6)
+        print(self.info.loc[1][1])
         for i in range(2):
             for j in range(5):
-                self.tableWidget.setItem(i,j, QTableWidgetItem(detail.loc[i][j]))
-                print(detail.loc[i][j])        
+                self.tableWidget.setItem(i,j, QTableWidgetItem(self.info.loc[i][j]))
+                print(self.info.loc[i][j])        
         self.tableWidget.move(100,0)
 
         # table selection change
         self.tableWidget.doubleClicked.connect(self.on_click)
 
-    #@pyqtSlot()
+
     def on_click(self):
         print("\n")
         for currentQTableWidgetItem in self.tableWidget.selectedItems():
             print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
+ 
         
 
 if __name__ == "__main__":
