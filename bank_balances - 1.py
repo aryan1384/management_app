@@ -271,7 +271,7 @@ class Ui_MainWindow(object):
     def addbutton(self):
         option = QFileDialog.Options()
         widget = QWidget()
-        myfile = QFileDialog.getOpenFileName(widget,'save file','default.txt','All Files (*.*)', options = option)
+        myfile = QFileDialog.getOpenFileName(widget,'open file','default.txt','All Files (*.*)', options = option)
         text_file_ = open(myfile[0] , 'r')
         text_file = text_file_.readlines()
         text_file_.close()

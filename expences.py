@@ -60,12 +60,12 @@ class Ui_MainWindow(object):
         self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
         self.groupBox_detail.setObjectName("groupBox_detail")
 
-        '''self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
+        self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
         self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_detail.setFont(font)
-        self.label_detail.setObjectName("label_detail")'''
+        self.label_detail.setObjectName("label_detail")
 
         self.show_table("information/Expences/X.csv")
 
@@ -204,8 +204,8 @@ class Ui_MainWindow(object):
         self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
         self.addFile_button.setText(_translate("MainWindow", "+"))
 
-        #self.label_detail.setText(_translate("MainWindow", "No detail"))
-        #self.label_detail.adjustSize()
+        self.label_detail.setText(_translate("MainWindow", "No detail"))
+        self.label_detail.adjustSize()
         self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
 
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

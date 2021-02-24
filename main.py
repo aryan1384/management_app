@@ -10,7 +10,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog
 
 import functions
 
@@ -274,6 +274,24 @@ class Ui_MainWindow(object):
 
     def functionBank_balances(self):
         self.label_tool.clear()
+        self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
+        #y_addFile_button = len(self.buttons)*70 + 50
+        #self.addFile_button.setGeometry(QtCore.QRect(70, y_addFile_button, 111, 51))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.addFile_button.setFont(font)
+        self.addFile_button.setObjectName("addFile_button")
+        self.button_file = []
+
+
+        #click_addFile
+        self.layout = QVBoxLayout(self.groupBox_tool) 
+        self.layout.addWidget(self.addFile_button)
+        self.addFile_button.clicked.connect(self.addbutton)
+
+        self.addFile_button.setText("+")
+
+        self.num=1
         
     def functionDucuments(self):
         pass
@@ -312,8 +330,37 @@ class Ui_MainWindow(object):
         pass
 
 
-class Bank_balances(object):
-     buttons = []
+    #functions -------------------------------------------------------
+
+    def addbutton(self):
+        option = QFileDialog.Options()
+        widget = QWidget()
+        myfile = QFileDialog.getOpenFileName(widget,'save file','default.txt','All Files (*.*)', options = option)
+        text_file_ = open(myfile[0] , 'r')
+        text_file = text_file_.readlines()
+        text_file_.close()
+        #print(text_file)
+        self.show_text(text_file)
+        self.button_file.append(text_file)
+        print('Button-{} will be created'.format(self.num))
+        button2 = QPushButton(str(self.num) , self.groupBox_tool)
+        button2.clicked.connect(lambda : self.show_text(self.button_file[int(button2.text()) - 1]))
+#        button2.move(100, 200)
+        self.layout.addWidget(button2)
+        self.num += 1
+        
+
+    def show_text(self,text_file):
+        #print('here')
+        mytext = ''
+        for i in text_file:
+            mytext += i
+        self.label_detail.setText(mytext)
+        self.label_detail.setGeometry(QtCore.QRect(20, 20, 450, 450))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_detail.setFont(font)
+        self.label_detail.adjustSize()
 
 
 
