@@ -1,12 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import functions
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QTableWidget, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 
 import sys
 import tkinter 
+import pandas as pd
 
 root = tkinter.Tk()
 #variables
@@ -60,12 +61,21 @@ class Ui_MainWindow(object):
         self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
         self.groupBox_detail.setObjectName("groupBox_detail")
 
-        self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
+        #table ---------------------------------------------------
+        self.createTable()
+        self.layout_table = QVBoxLayout(self.groupBox_detail)
+        self.layout_table.addWidget(self.tableWidget) 
+        self.setLayout(self.layout_table) 
+
+        # Show widget
+        self.show()
+
+        '''self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
         self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.label_detail.setFont(font)
-        self.label_detail.setObjectName("label_detail")
+        self.label_detail.setObjectName("label_detail")'''
 
         #formLayout =QFormLayout()
         #labelLis = []
@@ -196,9 +206,9 @@ class Ui_MainWindow(object):
         self.groupBox_tool.setTitle(_translate("MainWindow", "Tools"))
         self.addFile_button.setText(_translate("MainWindow", "+"))
 
-        self.label_detail.setText(_translate("MainWindow", "No detail"))
-        self.label_detail.adjustSize()
-        self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
+        #self.label_detail.setText(_translate("MainWindow", "No detail"))
+        #self.label_detail.adjustSize()
+        #self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
 
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -297,6 +307,26 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.label_detail.setFont(font)
         self.label_detail.adjustSize()
+
+    def createTable(self):
+       # Create table
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(2)
+        self.tableWidget.setColumnCount(6)
+        for i in range(2):
+            for j in range(5):
+                self.tableWidget.setItem(i,j, QTableWidgetItem(detail.loc[i][j]))
+                print(detail.loc[i][j])        
+        self.tableWidget.move(100,0)
+
+        # table selection change
+        self.tableWidget.doubleClicked.connect(self.on_click)
+
+    #@pyqtSlot()
+    def on_click(self):
+        print("\n")
+        for currentQTableWidgetItem in self.tableWidget.selectedItems():
+            print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
         
 
 if __name__ == "__main__":
