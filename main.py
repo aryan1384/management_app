@@ -10,7 +10,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout
 
 import functions
 
@@ -36,6 +36,7 @@ width_details = width_window // 5 * 3
 height_details = height_tools
 x_details = x_tools + width_tools + (width_window // 15)
 y_details = y_tools 
+height_tools = height_tools - 50
 
 
 class Ui_MainWindow(object):
@@ -244,7 +245,8 @@ class Ui_MainWindow(object):
         self.actionEmployees_Advice.triggered.connect(lambda: self.functionEmployees_Advice())
         self.actionCustomers_Advice.triggered.connect(lambda: self.functionCustomers_Advice())
 
-        #actions of click
+        #varaible ----------------------------------------
+        self.flag_layout = False
 
 
     def scroll_tools(self):
@@ -273,7 +275,10 @@ class Ui_MainWindow(object):
     #lists
 
     def functionBank_balances(self):
-        self.label_tool.clear()
+        
+        self.check_previous()
+
+
         self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
         #y_addFile_button = len(self.buttons)*70 + 50
         #self.addFile_button.setGeometry(QtCore.QRect(70, y_addFile_button, 111, 51))
@@ -282,15 +287,13 @@ class Ui_MainWindow(object):
         self.addFile_button.setFont(font)
         self.addFile_button.setObjectName("addFile_button")
         self.button_file = []
+        if not self.flag_layout:
+            self.make_layout()
 
-
-        #click_addFile
-        self.layout = QVBoxLayout(self.groupBox_tool) 
         self.layout.addWidget(self.addFile_button)
         self.addFile_button.clicked.connect(self.addbutton)
 
         self.addFile_button.setText("+")
-
         self.num=1
         
     def functionDucuments(self):
@@ -332,6 +335,13 @@ class Ui_MainWindow(object):
 
     #functions -------------------------------------------------------
 
+    def make_layout(self):
+
+        #click_addFile
+        self.layout = QVBoxLayout(self.groupBox_tool) 
+
+        self.flag_layout = True
+
     def addbutton(self):
         option = QFileDialog.Options()
         widget = QWidget()
@@ -362,6 +372,61 @@ class Ui_MainWindow(object):
         self.label_detail.setFont(font)
         self.label_detail.adjustSize()
 
+    def show_table(self, address):
+        # Create table
+        self.info = pd.read_csv(address)
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(2)
+        self.tableWidget.setColumnCount(6)
+        print(self.info.loc[1][1])
+        for i in range(2):
+            for j in range(5):
+                self.tableWidget.setItem(i,j, QTableWidgetItem(self.info.loc[i][j]))
+                print(self.info.loc[i][j])        
+        self.tableWidget.move(100,0)
+
+        # table selection change
+        self.tableWidget.doubleClicked.connect(self.on_click)
+
+
+    def on_click(self):
+        print("\n")
+        for currentQTableWidgetItem in self.tableWidget.selectedItems():
+            print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
+
+    def show_picture(self,img):
+        #img.save("trash.jpg")
+        image = Image.open(img)
+        width_img, height_img = image.size
+        while width_img > width_details or height_img > height_details:
+            image = image.resize((int(width_img // 1.05), int(height_img // 1.05)))
+            width_img, height_img = image.size
+        image.save("trash.jpg")    
+        #print(width_img, height_img)
+        self.label_detail.setPixmap(QtGui.QPixmap("trash.jpg"))
+        self.label_detail.setGeometry(QtCore.QRect(0, 0, width_img ,height_img))
+        os.remove('trash.jpg')
+        #self.label_detail.adjustSize()
+
+    def deleteLayout(self, cur_lay):
+        #QtGui.QLayout(cur_lay)
+        
+        if cur_lay is not None:
+            while cur_lay.count():
+                item = cur_lay.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.deleteLayout(item.layout())
+            #delete(cur_lay)
+
+    def check_previous(self):
+        if not self.flag_layout:
+            self.label_tool.clear()
+
+        if self.flag_layout:
+            self.deleteLayout(self.layout)
 
 
     
