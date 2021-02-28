@@ -36,7 +36,13 @@ width_details = width_window // 5 * 3
 height_details = height_tools
 x_details = x_tools + width_tools + (width_window // 15)
 y_details = y_tools 
-height_tools = height_tools - 50
+height_tools = height_tools - (height_tools // 5)
+
+#option
+width_option = width_tools
+height_option = height_details - height_tools - (height_tools // 15)
+x_option = x_tools
+y_option = y_tools + height_tools + (height_tools // 15)  
 
 
 class Ui_MainWindow(object):
@@ -61,6 +67,10 @@ class Ui_MainWindow(object):
         self.groupBox_detail.setGeometry(QtCore.QRect(x_details, y_details, width_details, height_details))
         self.groupBox_detail.setObjectName("groupBox_detail")
 
+        self.groupBox_option = QtWidgets.QGroupBox(self.centralwidget)
+        self.groupBox_option.setGeometry(QtCore.QRect(x_option, y_option, width_option, height_option))
+        self.groupBox_option.setObjectName("groupBox_option")
+
         '''self.groupBox_detail.setLayout(formLayout)
         scroll = QScrollArea()
         scroll.setWidget(self.groupBox_detail)
@@ -70,6 +80,14 @@ class Ui_MainWindow(object):
         layout.addWidget(scroll)'''
 
         #label in groupBox --------------------------------------------
+
+        self.label_name = QtWidgets.QLabel(self.centralwidget)
+        self.label_name.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_name.setFont(font)
+        self.label_name.setObjectName("label_name")
+
 
         self.label_detail = QtWidgets.QLabel(self.groupBox_detail)
         self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
@@ -184,6 +202,7 @@ class Ui_MainWindow(object):
         self.label_detail.setText(_translate("MainWindow", "No detail"))
         self.label_detail.adjustSize()
         self.groupBox_detail.setTitle(_translate("MainWindow", "Detail"))
+        self.groupBox_option.setTitle(_translate("MainWindow", "Option"))
 
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -275,9 +294,7 @@ class Ui_MainWindow(object):
     #lists
 
     def functionBank_balances(self):
-        
         self.check_previous()
-
 
         self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
         #y_addFile_button = len(self.buttons)*70 + 50

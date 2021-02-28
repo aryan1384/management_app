@@ -1,4 +1,150 @@
+'''
+#!/usr/bin/python
+
+"""
+ZetCode PyQt5 tutorial
+
+In this example, we position two push
+buttons in the bottom-right corner
+of the window.
+
+Author: Jan Bodnar
+Website: zetcode.com
+"""
+
 import sys
+from PyQt5.QtWidgets import (QWidget, QPushButton,
+                             QHBoxLayout, QVBoxLayout, QApplication)
+
+
+class Example(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+
+        okButton = QPushButton("OK", self)
+        cancelButton = QPushButton("Cancel")
+
+        okButton.clicked.connect(self.p)
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(okButton)
+        hbox.addWidget(cancelButton)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(0)
+        vbox.addLayout(hbox)
+
+        self.setLayout(vbox)
+
+        self.setGeometry(300, 300, 600, 300)
+        self.setWindowTitle('Buttons')
+        self.show()
+
+    def p(self):
+        print(1)
+
+
+def main():
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main()
+
+'''
+
+
+
+
+
+
+
+#!/usr/bin/python
+
+"""
+ZetCode PyQt5 tutorial
+
+In this example, we create a bit
+more complicated window layout using
+the QGridLayout manager.
+
+Author: Jan Bodnar
+Website: zetcode.com
+"""
+
+import sys
+from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton,
+                             QTextEdit, QGridLayout, QApplication)
+
+
+class Example(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        title = QLabel('Title')
+        author = QLabel('Author')
+        review = QLabel('Review')
+
+        self.titleEdit = QLineEdit()
+        authorEdit = QLineEdit()
+        reviewEdit = QTextEdit()
+        self.okButton = QPushButton("OK")
+
+        grid = QGridLayout()
+        grid.setSpacing(10)
+
+        grid.addWidget(title, 1, 0)
+        grid.addWidget(self.titleEdit, 1, 1)
+
+        grid.addWidget(author, 2, 0)
+        grid.addWidget(authorEdit, 2, 1)
+
+        grid.addWidget(review, 3, 0)
+        grid.addWidget(reviewEdit, 3, 1, 5, 1)
+
+        grid.addWidget(self.okButton, 9, 1)
+
+        self.setLayout(grid)
+
+        self.okButton.clicked.connect(self.p)
+
+        self.setGeometry(300, 300, 350, 300)
+        self.setWindowTitle('Review')
+        self.show()
+
+    def p(self):
+        print(self.titleEdit.text())
+
+
+def main():
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main() 
+
+
+
+
+
+
+
+
+'''import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget,QTableWidgetItem,QVBoxLayout
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
@@ -54,7 +200,7 @@ class App(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
-    sys.exit(app.exec_())  
+    sys.exit(app.exec_()) ''' 
 
 
 ''''''
