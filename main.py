@@ -82,9 +82,9 @@ class Ui_MainWindow(object):
         #label in groupBox --------------------------------------------
 
         self.label_name = QtWidgets.QLabel(self.centralwidget)
-        self.label_name.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
+        self.label_name.setGeometry(QtCore.QRect(x_tools, y_tools - 20, 91, 51))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(8)
         self.label_name.setFont(font)
         self.label_name.setObjectName("label_name")
 
@@ -254,7 +254,7 @@ class Ui_MainWindow(object):
         self.actionCrafts_and_Consumption.triggered.connect(lambda: self.functionCraft_and_Consumption())
         self.actionChecks_issued.triggered.connect(lambda: self.functionChecks_issued())
         self.actionExpenses.triggered.connect(lambda: self.functionExpenses())
-        self.actionAssets.triggered.connect(lambda: self.functionAssert())
+        self.actionAssets.triggered.connect(lambda: self.functionAsset())
         self.actionStocks.triggered.connect(lambda: self.functionStocks())
         self.actionEmployees.triggered.connect(lambda: self.functionEmployees())
         self.actionCustomers.triggered.connect(lambda: self.functionCustomers())
@@ -296,6 +296,9 @@ class Ui_MainWindow(object):
     def functionBank_balances(self):
         self.check_previous()
 
+        self.label_name.setText("‌bank balances")
+        self.label_name.adjustSize()
+
         self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
         #y_addFile_button = len(self.buttons)*70 + 50
         #self.addFile_button.setGeometry(QtCore.QRect(70, y_addFile_button, 111, 51))
@@ -314,25 +317,32 @@ class Ui_MainWindow(object):
         self.num=1
         
     def functionDucuments(self):
-        pass
+        self.label_name.setText("‌Ducument")
+        self.label_name.adjustSize()
 
     def functionCraft_and_Consumption(self):
-        pass
+        self.label_name.setText("‌Craft and Consumption")
+        self.label_name.adjustSize()
 
     def functionChecks_issued(self):
-        pass
+        self.label_name.setText("‌Check issued")
+        self.label_name.adjustSize()
 
     def functionExpenses(self):
-        pass
+        self.label_name.setText("‌Expences")
+        self.label_name.adjustSize()
 
-    def functionAssert(self):
-        pass
+    def functionAsset(self):
+        self.label_name.setText("‌Assets")
+        self.label_name.adjustSize()
 
     def functionStocks(self):
-        pass
+        self.label_name.setText("‌Stocks")
+        self.label_name.adjustSize()
 
     def functionEmployees(self):
-        pass
+        self.label_name.setText("‌Employees")
+        self.label_name.adjustSize()
 
     def functionCustomers(self):
         pass
