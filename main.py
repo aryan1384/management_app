@@ -10,7 +10,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout
 
 import functions
 
@@ -310,37 +310,53 @@ class Ui_MainWindow(object):
         if not self.flag_layout:
             self.make_layout()
 
-        self.layout.addWidget(self.addFile_button)
+        self.layout_tool.addWidget(self.addFile_button)
         self.addFile_button.clicked.connect(self.addbutton)
 
         self.addFile_button.setText("+")
         self.num=1
         
     def functionDucuments(self):
+        self.check_previous()
+
         self.label_name.setText("‌Ducument")
         self.label_name.adjustSize()
 
     def functionCraft_and_Consumption(self):
+        self.check_previous()
+
         self.label_name.setText("‌Craft and Consumption")
         self.label_name.adjustSize()
 
     def functionChecks_issued(self):
+        self.check_previous()
+
         self.label_name.setText("‌Check issued")
         self.label_name.adjustSize()
 
     def functionExpenses(self):
+        self.check_previous()
+
         self.label_name.setText("‌Expences")
         self.label_name.adjustSize()
 
     def functionAsset(self):
+        self.check_previous()
+
         self.label_name.setText("‌Assets")
         self.label_name.adjustSize()
 
     def functionStocks(self):
+        self.check_previous()
+
         self.label_name.setText("‌Stocks")
         self.label_name.adjustSize()
 
+        self.show_option(['text','pic','table','chart'])
+
     def functionEmployees(self):
+        self.check_previous()
+
         self.label_name.setText("‌Employees")
         self.label_name.adjustSize()
 
@@ -365,7 +381,7 @@ class Ui_MainWindow(object):
     def make_layout(self):
 
         #click_addFile
-        self.layout = QVBoxLayout(self.groupBox_tool) 
+        self.layout_tool = QVBoxLayout(self.groupBox_tool) 
 
         self.flag_layout = True
 
@@ -383,7 +399,7 @@ class Ui_MainWindow(object):
         button2 = QPushButton(str(self.num) , self.groupBox_tool)
         button2.clicked.connect(lambda : self.show_text(self.button_file[int(button2.text()) - 1]))
 #        button2.move(100, 200)
-        self.layout.addWidget(button2)
+        self.layout_tool.addWidget(button2)
         self.num += 1
         
 
@@ -453,9 +469,21 @@ class Ui_MainWindow(object):
             self.label_tool.clear()
 
         if self.flag_layout:
-            self.deleteLayout(self.layout)
+            self.deleteLayout(self.layout_tool)
 
 
+    def show_option(self, option_list):
+        self.layout_option = QHBoxLayout(self.groupBox_option)
+        for i in option_list:
+            self.option_text = i
+            self.option_button = QtWidgets.QPushButton(self.groupBox_option)
+            self.layout_option.addWidget(self.option_button)
+            self.option_button.clicked.connect(lambda : self.function_option(self.option_text))
+            self.option_button.setText(self.option_text)
+
+
+    def function_option(self, text_button):
+        print(text_button)
     
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
