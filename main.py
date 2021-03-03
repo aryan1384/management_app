@@ -474,16 +474,20 @@ class Ui_MainWindow(object):
 
     def show_option(self, option_list):
         self.layout_option = QHBoxLayout(self.groupBox_option)
-        for i in option_list:
-            self.option_text = i
-            self.option_button = QtWidgets.QPushButton(self.groupBox_option)
-            self.layout_option.addWidget(self.option_button)
-            self.option_button.clicked.connect(lambda : self.function_option(self.option_text))
-            self.option_button.setText(self.option_text)
+        #option_list = len(option_list)
+        self.option_text = [''] * len(option_list)
+        self.option_button = [''] * len(option_list)
+        for i in range (len(option_list)):
+            self.option_text[i] = option_list[i]
+            self.option_button[i] = QtWidgets.QPushButton(self.groupBox_option)
+            self.layout_option.addWidget(self.option_button[i])
+            self.option_button[i].clicked.connect(lambda : self.function_option(self.option_button[i].text()))
+            self.option_button[i].setText(self.option_text[i])
 
 
     def function_option(self, text_button):
         print(text_button)
+        print(self.option_text)
     
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
