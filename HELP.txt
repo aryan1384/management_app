@@ -1,0 +1,23 @@
+                                   ***HELP!***
+Hello                                   
+We are at your service by helping you the accounting software you want.
+lists:
+1-bank balances:
+This item shows you that in each of your accounts how much money do you have.
+2-reports:
+This item consists of documents and (crafts and consumption).
+This item give you reports about your documents and (crafts and consumption).
+3-checks issued:
+This item shows your checks(Received or given)with the information.
+4-expenses:
+This item shows you how much money did you spend in a while.
+5-Assets:
+This item shows you what things do you have.
+6-stocks:
+This item shows your stocks!
+7-Employees:
+This item shows information about your employees.
+8-Customers:
+This item is disabled!
+Advice and predicts:
+This part Coming soon!:))))))))))))

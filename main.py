@@ -22,12 +22,12 @@ root = tkinter.Tk()
 #variables
 #window
 width_window = root.winfo_screenwidth()
-height_window = root.winfo_screenheight()
+height_window = root.winfo_screenheight() - 70
 #print(width_window , height_window)
 
 #tools
 width_tools = width_window // 4
-height_tools = height_window - (height_window // 7)
+height_tools = height_window - (height_window // 9)
 x_tools = width_window // 40
 y_tools = height_window // 25
 
@@ -265,7 +265,9 @@ class Ui_MainWindow(object):
         self.actionCustomers_Advice.triggered.connect(lambda: self.functionCustomers_Advice())
 
         #varaible ----------------------------------------
-        self.flag_layout = False
+        self.flag_layout_tool = False
+        self.flag_layout_option = False
+        self.map_option = "text"
 
 
     def scroll_tools(self):
@@ -298,67 +300,72 @@ class Ui_MainWindow(object):
 
         self.label_name.setText("‌bank balances")
         self.label_name.adjustSize()
+        self.make_plus_button()
 
-        self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
-        #y_addFile_button = len(self.buttons)*70 + 50
-        #self.addFile_button.setGeometry(QtCore.QRect(70, y_addFile_button, 111, 51))
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.addFile_button.setFont(font)
-        self.addFile_button.setObjectName("addFile_button")
-        self.button_file = []
-        if not self.flag_layout:
-            self.make_layout()
+        self.show_option(['text','table'])
 
-        self.layout_tool.addWidget(self.addFile_button)
-        self.addFile_button.clicked.connect(self.addbutton)
-
-        self.addFile_button.setText("+")
-        self.num=1
-        
     def functionDucuments(self):
         self.check_previous()
 
         self.label_name.setText("‌Ducument")
         self.label_name.adjustSize()
+        self.make_plus_button()
+
+        self.show_option(['text','pic'])
 
     def functionCraft_and_Consumption(self):
         self.check_previous()
 
         self.label_name.setText("‌Craft and Consumption")
         self.label_name.adjustSize()
+        self.make_plus_button()
+
+        self.show_option(['text','pic','table','chart'])
 
     def functionChecks_issued(self):
         self.check_previous()
 
         self.label_name.setText("‌Check issued")
         self.label_name.adjustSize()
+        self.make_plus_button()
+
+        self.show_option(['text','pic','table'])
 
     def functionExpenses(self):
         self.check_previous()
 
         self.label_name.setText("‌Expences")
         self.label_name.adjustSize()
+        self.make_plus_button()
+
+        self.show_option(['text','table','chart'])
 
     def functionAsset(self):
         self.check_previous()
 
         self.label_name.setText("‌Assets")
         self.label_name.adjustSize()
+        self.make_plus_button()
+
+        self.show_option(['text','pic','table','chart'])
 
     def functionStocks(self):
         self.check_previous()
 
         self.label_name.setText("‌Stocks")
         self.label_name.adjustSize()
+        self.make_plus_button()
 
-        self.show_option(['text','pic','table','chart'])
+        self.show_option(['text','table','stock'])
 
     def functionEmployees(self):
         self.check_previous()
 
         self.label_name.setText("‌Employees")
         self.label_name.adjustSize()
+        self.make_plus_button()
+
+        self.show_option(['text','pic','table'])
 
     def functionCustomers(self):
         pass
@@ -377,18 +384,36 @@ class Ui_MainWindow(object):
 
 
     #functions -------------------------------------------------------
+    def make_plus_button(self):
+        self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
+        #y_addFile_button = len(self.buttons)*70 + 50
+        #self.addFile_button.setGeometry(QtCore.QRect(70, y_addFile_button, 111, 51))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.addFile_button.setFont(font)
+        self.addFile_button.setObjectName("addFile_button")
+        self.button_file = []
+        if not self.flag_layout_tool:
+            self.make_layout()
+
+        self.layout_tool.addWidget(self.addFile_button)
+        self.addFile_button.clicked.connect(self.addbutton)
+
+        self.addFile_button.setText("+")
+        self.num=1
+
 
     def make_layout(self):
 
         #click_addFile
         self.layout_tool = QVBoxLayout(self.groupBox_tool) 
 
-        self.flag_layout = True
+        self.flag_layout_tool = True
 
     def addbutton(self):
         option = QFileDialog.Options()
         widget = QWidget()
-        myfile = QFileDialog.getOpenFileName(widget,'save file','default.txt','All Files (*.*)', options = option)
+        myfile = QFileDialog.getOpenFileName(widget,'open file','default.txt','All Files (*.*)', options = option)
         text_file_ = open(myfile[0] , 'r')
         text_file = text_file_.readlines()
         text_file_.close()
@@ -396,12 +421,26 @@ class Ui_MainWindow(object):
         self.show_text(text_file)
         self.button_file.append(text_file)
         print('Button-{} will be created'.format(self.num))
-        button2 = QPushButton(str(self.num) , self.groupBox_tool)
-        button2.clicked.connect(lambda : self.show_text(self.button_file[int(button2.text()) - 1]))
+        button_tool = QPushButton(str(self.num) , self.groupBox_tool)
+        button_tool.clicked.connect(lambda : self.map_option(self.button_file[int(button_tool.text()) - 1]))
 #        button2.move(100, 200)
-        self.layout_tool.addWidget(button2)
+        self.layout_tool.addWidget(button_tool)
         self.num += 1
-        
+
+    def change_map(self, new_map):
+        if new_map == "text":
+            self.map_option = self.show_text
+
+        if new_map == "pic":
+            self.map_option = self.show_picture
+
+        if new_map == "table":
+            self.map_option = self.show_table
+
+        if new_map == "chart":
+            self.map_option = self.show_chart 
+
+        self.check_previous()           
 
     def show_text(self,text_file):
         #print('here')
@@ -451,6 +490,9 @@ class Ui_MainWindow(object):
         os.remove('trash.jpg')
         #self.label_detail.adjustSize()
 
+    def show_chart(self):
+        print("show_chart")
+
     def deleteLayout(self, cur_lay):
         #QtGui.QLayout(cur_lay)
         
@@ -465,30 +507,42 @@ class Ui_MainWindow(object):
             #delete(cur_lay)
 
     def check_previous(self):
-        if not self.flag_layout:
+        if not self.flag_layout_tool:
             self.label_tool.clear()
 
-        if self.flag_layout:
+        if self.flag_layout_tool:
             self.deleteLayout(self.layout_tool)
+            font = QtGui.QFont()
+            font.setPointSize(16)
+            self.label_detail.setFont(font)
+            self.label_detail.setText("No detail")
+            self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
+            self.label_detail.adjustSize()
 
 
     def show_option(self, option_list):
-        self.layout_option = QHBoxLayout(self.groupBox_option)
+        if not self.flag_layout_option:
+            self.layout_option = QHBoxLayout(self.groupBox_option)
+            self.flag_layout_option = True
+
+        self.deleteLayout(self.layout_option)
         #option_list = len(option_list)
         self.option_text = [''] * len(option_list)
         self.option_button = [''] * len(option_list)
-        for i in range (len(option_list)):
+        for i in range(len(option_list)):
             self.option_text[i] = option_list[i]
-            self.option_button[i] = QtWidgets.QPushButton(self.groupBox_option)
+            self.option_button[i] = QPushButton(self.option_text[i], self.groupBox_option)
             self.layout_option.addWidget(self.option_button[i])
-            self.option_button[i].clicked.connect(lambda : self.function_option(self.option_button[i].text()))
-            self.option_button[i].setText(self.option_text[i])
-
+        self.option_button[0].clicked.connect(lambda : self.change_map(self.option_button[0].text()))
+        self.option_button[1].clicked.connect(lambda : self.change_map(self.option_button[1].text()))
+        if len(option_list) > 2:
+            self.option_button[2].clicked.connect(lambda : self.change_map(self.option_button[2].text()))
+            if len(option_list) > 3:
+                self.option_button[3].clicked.connect(lambda : self.change_map(self.option_button[3].text()))
 
     def function_option(self, text_button):
         print(text_button)
-        print(self.option_text)
-    
+            
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
 ui = Ui_MainWindow()
