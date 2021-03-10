@@ -422,7 +422,7 @@ class Ui_MainWindow(object):
         self.button_file.append(text_file)
         print('Button-{} will be created'.format(self.num))
         button_tool = QPushButton(str(self.num) , self.groupBox_tool)
-        button_tool.clicked.connect(lambda : self.map_option(self.button_file[int(button_tool.text()) - 1]))
+        button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
 #        button2.move(100, 200)
         self.layout_tool.addWidget(button_tool)
         self.num += 1
@@ -447,6 +447,7 @@ class Ui_MainWindow(object):
         mytext = ''
         for i in text_file:
             mytext += i
+
         self.label_detail.setText(mytext)
         self.label_detail.setGeometry(QtCore.QRect(20, 20, 450, 450))
         font = QtGui.QFont()
