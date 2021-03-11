@@ -10,7 +10,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout, QTableWidget, QTableWidgetItem
 
 import functions
 
@@ -418,10 +418,11 @@ class Ui_MainWindow(object):
         text_file = text_file_.readlines()
         text_file_.close()
         #print(text_file)
-        self.show_text(text_file)
+        #self.show_text(text_file)
+        self.show_table("information/Expences/X.csv")
         self.button_file.append(text_file)
         print('Button-{} will be created'.format(self.num))
-        button_tool = QPushButton(str(self.num) , self.groupBox_tool)
+        button_tool = QPushButton(str("Meli bank") , self.groupBox_tool)
         button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
 #        button2.move(100, 200)
         self.layout_tool.addWidget(button_tool)
@@ -456,6 +457,7 @@ class Ui_MainWindow(object):
         self.label_detail.adjustSize()
 
     def show_table(self, address):
+        
         # Create table
         self.info = pd.read_csv(address)
         self.tableWidget = QTableWidget()
@@ -470,6 +472,9 @@ class Ui_MainWindow(object):
 
         # table selection change
         self.tableWidget.doubleClicked.connect(self.on_click)
+
+        self.layout = QVBoxLayout(self.groupBox_detail)
+        self.layout.addWidget(self.tableWidget) 
 
 
     def on_click(self):
