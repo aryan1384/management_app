@@ -297,86 +297,36 @@ class Ui_MainWindow(object):
     #lists
 
     def functionBank_balances(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Bank balances")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','table'])
-
-        print(self.currunt_map)
-        self.shown_file_address = "information/" + "Ducuments" + "/" + str(self.currunt_map) 
-        self.shown_file = os.listdir(self.shown_file_address)
-
-        for i in range(len(self.shown_file)):
-            self.make_tool_button(self.shown_file[i])
-
-        print(self.shown_file)
+        self.prepare("Bank balances", ['text','table'])
+        
 
     def functionDucuments(self):
-        self.check_previous()
-
-        self.label_name.setText("Ducuments")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','pic'])
+        self.prepare("Documents", ['text','pic'])
+        
 
     def functionCraft_and_Consumption(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Craft and Consumptions")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','pic','table','chart'])
+        self.prepare("Craft and Consumption", ['text','pic','table','chart'])
+        
 
     def functionChecks_issued(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Checks issued")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','pic','table'])
+        self.prepare("Check issued", ['text','pic','table'])
+    
 
     def functionExpenses(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Expences")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','table','chart'])
+        self.prepare("Expences", ['text','table','chart','pic'])
+        
 
     def functionAsset(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Assets")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','pic','table','chart'])
+        self.prepare("Assets",['text','pic','table','chart'])
+        
 
     def functionStocks(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Stocks")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','table','stock'])
+        self.prepare("Stocks", ['text','table','stock'])
+        
 
     def functionEmployees(self):
-        self.check_previous()
-
-        self.label_name.setText("‌Employees")
-        self.label_name.adjustSize()
-        self.make_plus_button()
-
-        self.show_option(['text','pic','table'])
-
+        self.prepare("Employees", ['text','pic','table'])
+        
     def functionCustomers(self):
         pass
     #advice and predict
@@ -394,6 +344,22 @@ class Ui_MainWindow(object):
 
 
     #functions -------------------------------------------------------
+    def prepare(self, map_name, list_options):
+        self.check_previous()
+
+        self.label_name.setText(map_name)
+        self.label_name.adjustSize()
+        self.make_plus_button()
+
+        print(self.currunt_map)
+        self.shown_file_address = "information/" + str(map_name) + "/" + str(self.currunt_map) 
+        self.shown_file = os.listdir(self.shown_file_address)
+
+        for i in range(len(self.shown_file)):
+            self.make_tool_button(self.shown_file[i])
+
+        self.show_option(list_options)
+
     
     def make_plus_button(self):
         self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
