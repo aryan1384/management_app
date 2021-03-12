@@ -12,7 +12,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout, QTableWidget, QTableWidgetItem
 
-import functions
+import os
 
 import sys
 import tkinter
@@ -267,7 +267,8 @@ class Ui_MainWindow(object):
         #varaible ----------------------------------------
         self.flag_layout_tool = False
         self.flag_layout_option = False
-        self.map_option = "text"
+        self.map_option = self.show_text
+        self.currunt_map = "text"
 
 
     def scroll_tools(self):
@@ -298,16 +299,25 @@ class Ui_MainWindow(object):
     def functionBank_balances(self):
         self.check_previous()
 
-        self.label_name.setText("‌bank balances")
+        self.label_name.setText("‌Bank balances")
         self.label_name.adjustSize()
         self.make_plus_button()
 
         self.show_option(['text','table'])
 
+        print(self.currunt_map)
+        self.shown_file_address = "information/" + "Ducuments" + "/" + str(self.currunt_map) 
+        self.shown_file = os.listdir(self.shown_file_address)
+
+        for i in range(len(self.shown_file)):
+            self.make_tool_button(self.shown_file[i])
+
+        print(self.shown_file)
+
     def functionDucuments(self):
         self.check_previous()
 
-        self.label_name.setText("‌Ducument")
+        self.label_name.setText("Ducuments")
         self.label_name.adjustSize()
         self.make_plus_button()
 
@@ -316,7 +326,7 @@ class Ui_MainWindow(object):
     def functionCraft_and_Consumption(self):
         self.check_previous()
 
-        self.label_name.setText("‌Craft and Consumption")
+        self.label_name.setText("‌Craft and Consumptions")
         self.label_name.adjustSize()
         self.make_plus_button()
 
@@ -325,7 +335,7 @@ class Ui_MainWindow(object):
     def functionChecks_issued(self):
         self.check_previous()
 
-        self.label_name.setText("‌Check issued")
+        self.label_name.setText("‌Checks issued")
         self.label_name.adjustSize()
         self.make_plus_button()
 
@@ -384,6 +394,7 @@ class Ui_MainWindow(object):
 
 
     #functions -------------------------------------------------------
+    
     def make_plus_button(self):
         self.addFile_button = QtWidgets.QPushButton(self.groupBox_tool)
         #y_addFile_button = len(self.buttons)*70 + 50
@@ -414,19 +425,43 @@ class Ui_MainWindow(object):
         option = QFileDialog.Options()
         widget = QWidget()
         myfile = QFileDialog.getOpenFileName(widget,'open file','default.txt','All Files (*.*)', options = option)
-        text_file_ = open(myfile[0] , 'r')
-        text_file = text_file_.readlines()
-        text_file_.close()
-        #print(text_file)
-        #self.show_text(text_file)
-        self.show_table("information/Expences/X.csv")
-        self.button_file.append(text_file)
-        print('Button-{} will be created'.format(self.num))
-        button_tool = QPushButton(str("Meli bank") , self.groupBox_tool)
-        button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
-#        button2.move(100, 200)
-        self.layout_tool.addWidget(button_tool)
-        self.num += 1
+        try:
+            text_file_ = open(myfile[0] , 'r')
+            text_file = text_file_.readlines()
+            text_file_.close()
+            #print(text_file)
+            self.map_option(text_file)
+            #self.show_table("information/Expences/X.csv")
+            self.button_file.append(text_file)
+            #print('Button-{} will be created'.format(self.num))
+            button_tool = QPushButton(str(self.num) , self.groupBox_tool)
+            button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
+            #button2.move(100, 200)
+            self.layout_tool.addWidget(button_tool)
+            self.num += 1
+
+        except:
+            pass
+
+    def make_tool_button(self, address):
+        try:
+            text_file_ = open(address , 'r')
+            text_file = text_file_.readlines()
+            text_file_.close()
+            #print(text_file)
+            self.map_option(text_file)
+            
+            self.button_file.append(text_file)
+            #print('Button-{} will be created'.format(self.num))
+            button_tool = QPushButton(str(self.num) , self.groupBox_tool)
+            button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
+            #button2.move(100, 200)
+            self.layout_tool.addWidget(button_tool)
+            self.num += 1
+
+        except:
+            pass
+
 
     def change_map(self, new_map):
         if new_map == "text":
@@ -441,7 +476,9 @@ class Ui_MainWindow(object):
         if new_map == "chart":
             self.map_option = self.show_chart 
 
-        self.check_previous()           
+        self.currunt_map = new_map
+
+        self.check_previous()        
 
     def show_text(self,text_file):
         #print('here')
@@ -454,7 +491,8 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label_detail.setFont(font)
-        self.label_detail.adjustSize()
+        self.label_detail.adjustSize()   
+
 
     def show_table(self, address):
         

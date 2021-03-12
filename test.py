@@ -1,3 +1,28 @@
+def jam_ragham(n):
+    n_c = n
+    t = 0
+    while n_c != 0:
+        t += n_c%10
+        n_c //= 10
+
+    return t
+
+t = 0
+for i in range(10 ** 9,10 ** 10):
+    if jam_ragham(i) == 4:
+        t+=1
+        print(i)
+
+print(t) 
+
+
+'''import os
+entries = os.listdir('information/Expences')
+
+print(entries)
+'''
+
+'''
 # importing libraries 
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore, QtGui 
@@ -81,3 +106,4 @@ window = Window()
 
 # start the app 
 sys.exit(App.exec()) 
+'''
