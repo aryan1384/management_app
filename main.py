@@ -21,8 +21,8 @@ import pandas as pd
 root = tkinter.Tk()
 #variables
 #window
-width_window = root.winfo_screenwidth()
-height_window = root.winfo_screenheight() - 70
+width_window = root.winfo_screenwidth() - 15
+height_window = root.winfo_screenheight() - 78
 #print(width_window , height_window)
 
 #tools
@@ -305,11 +305,11 @@ class Ui_MainWindow(object):
         
 
     def functionCraft_and_Consumption(self):
-        self.prepare("Craft and Consumption", ['text','pic','table','chart'])
+        self.prepare("Craft and Consumptions", ['text','pic','table','chart'])
         
 
     def functionChecks_issued(self):
-        self.prepare("Check issued", ['text','pic','table'])
+        self.prepare("Checks issued", ['text','pic','table'])
     
 
     def functionExpenses(self):
@@ -351,8 +351,9 @@ class Ui_MainWindow(object):
         self.label_name.adjustSize()
         self.make_plus_button()
 
-        print(self.currunt_map)
+        #print(self.currunt_map)
         self.shown_file_address = "information/" + str(map_name) + "/" + str(self.currunt_map) 
+        #print(os.listdir("information/" + str(map_name)))
         self.shown_file = os.listdir(self.shown_file_address)
 
         for i in range(len(self.shown_file)):
@@ -373,6 +374,8 @@ class Ui_MainWindow(object):
         if not self.flag_layout_tool:
             self.make_layout()
 
+        self.number_name_toolButton = {}
+
         self.layout_tool.addWidget(self.addFile_button)
         self.addFile_button.clicked.connect(self.addbutton)
 
@@ -381,7 +384,6 @@ class Ui_MainWindow(object):
 
 
     def make_layout(self):
-
         #click_addFile
         self.layout_tool = QVBoxLayout(self.groupBox_tool) 
 
@@ -391,26 +393,11 @@ class Ui_MainWindow(object):
         option = QFileDialog.Options()
         widget = QWidget()
         myfile = QFileDialog.getOpenFileName(widget,'open file','default.txt','All Files (*.*)', options = option)
-        try:
-            text_file_ = open(myfile[0] , 'r')
-            text_file = text_file_.readlines()
-            text_file_.close()
-            #print(text_file)
-            self.map_option(text_file)
-            #self.show_table("information/Expences/X.csv")
-            self.button_file.append(text_file)
-            #print('Button-{} will be created'.format(self.num))
-            button_tool = QPushButton(str(self.num) , self.groupBox_tool)
-            button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
-            #button2.move(100, 200)
-            self.layout_tool.addWidget(button_tool)
-            self.num += 1
-
-        except:
-            pass
+        self.make_tool_button(myfile[0])
 
     def make_tool_button(self, address):
         try:
+            self.number_name_toolButton[str(address)] = self.num
             text_file_ = open(address , 'r')
             text_file = text_file_.readlines()
             text_file_.close()
@@ -419,8 +406,8 @@ class Ui_MainWindow(object):
             
             self.button_file.append(text_file)
             #print('Button-{} will be created'.format(self.num))
-            button_tool = QPushButton(str(self.num) , self.groupBox_tool)
-            button_tool.clicked.connect(lambda : self.show_text(self.button_file[int(button_tool.text()) - 1]))
+            button_tool = QPushButton(str(address) , self.groupBox_tool)
+            button_tool.clicked.connect(lambda : self.show_text(self.button_file[ self.number_name_toolButton[button_tool.text()] - 1]))
             #button2.move(100, 200)
             self.layout_tool.addWidget(button_tool)
             self.num += 1
@@ -528,7 +515,6 @@ class Ui_MainWindow(object):
             self.label_detail.setText("No detail")
             self.label_detail.setGeometry(QtCore.QRect(width_details // 2 - 30, height_details // 2 - 20, 91, 51))
             self.label_detail.adjustSize()
-
 
     def show_option(self, option_list):
         if not self.flag_layout_option:
