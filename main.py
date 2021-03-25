@@ -397,7 +397,7 @@ class Ui_MainWindow(object):
 
     def make_tool_button(self, address):
         try:
-            self.number_name_toolButton[str(address)] = self.num
+            
             text_file_ = open(address , 'r')
             text_file = text_file_.readlines()
             text_file_.close()
@@ -410,6 +410,8 @@ class Ui_MainWindow(object):
             address = address.split(a[0])
             address = address[-1]
             address = address.split(".")
+            self.number_name_toolButton[str(address[0])] = self.num  #dic for address and number
+            print(self.number_name_toolButton)
             button_tool = QPushButton(str(address[0]) , self.groupBox_tool)
             button_tool.clicked.connect(lambda : self.show_text(self.button_file[ self.number_name_toolButton[button_tool.text()] - 1]))
             #button2.move(100, 200)
