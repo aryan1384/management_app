@@ -406,7 +406,11 @@ class Ui_MainWindow(object):
             
             self.button_file.append(text_file)
             #print('Button-{} will be created'.format(self.num))
-            button_tool = QPushButton(str(address) , self.groupBox_tool)
+            a  = r"/ " #related to below line
+            address = address.split(a[0])
+            address = address[-1]
+            address = address.split(".")
+            button_tool = QPushButton(str(address[0]) , self.groupBox_tool)
             button_tool.clicked.connect(lambda : self.show_text(self.button_file[ self.number_name_toolButton[button_tool.text()] - 1]))
             #button2.move(100, 200)
             self.layout_tool.addWidget(button_tool)
