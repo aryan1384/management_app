@@ -321,7 +321,7 @@ class Ui_MainWindow(object):
         
 
     def functionStocks(self):
-        self.prepare("Stocks", ['text','table','stock'])
+        self.prepare("Stocks", ['text','table','chart'])
         
 
     def functionEmployees(self):
