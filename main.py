@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout, QFileDialog, QLayout, QTableWidget, QTableWidgetItem
 
 import os
+from PIL import Image
 
 import sys
 import tkinter
@@ -267,7 +268,7 @@ class Ui_MainWindow(object):
         #varaible ----------------------------------------
         self.flag_layout_tool = False
         self.flag_layout_option = False
-        self.map_option = self.show_text
+        self.map_option = self.analysis_text
         self.currunt_map = "text"
 
 
@@ -346,9 +347,15 @@ class Ui_MainWindow(object):
     #functions -------------------------------------------------------
     def prepare(self, map_name, list_options):
         self.check_previous()
+        
+        self.prepare_show(map_name)
+        self.show_option(list_options)
 
-        self.label_name.setText(map_name)
+    def prepare_show(self, map_name):
+        self.map_name = map_name
+        self.label_name.setText(map_name + " - " + self.currunt_map)
         self.label_name.adjustSize()
+
         self.make_plus_button()
 
         #print(self.currunt_map)
@@ -359,7 +366,7 @@ class Ui_MainWindow(object):
         for i in range(len(self.shown_file)):
             self.make_tool_button(self.shown_file[i])
 
-        self.show_option(list_options)
+        
 
     
     def make_plus_button(self):
@@ -393,16 +400,38 @@ class Ui_MainWindow(object):
         option = QFileDialog.Options()
         widget = QWidget()
         myfile = QFileDialog.getOpenFileName(widget,'open file','default.txt','All Files (*.*)', options = option)
-        self.make_tool_button(myfile[0])
+        self.map_option(myfile[0])
 
     def make_tool_button(self, address):
+        self.map_option(address)
+
+
+    def change_map(self, new_map):
+        if new_map == "text":
+            self.map_option = self.analysis_text
+
+        if new_map == "pic":
+            self.map_option = self.analysis_pic
+
+        if new_map == "table":
+            self.map_option = self.show_table
+
+        if new_map == "chart":
+            self.map_option = self.show_chart 
+
+        self.currunt_map = new_map
+        self.num = 1
+        self.check_previous() 
+        self.prepare_show(self.map_name)
+
+    def analysis_text(self, address):
         try:
             
             text_file_ = open(address , 'r')
             text_file = text_file_.readlines()
             text_file_.close()
             #print(text_file)
-            self.map_option(text_file)
+            self.show_text(text_file)
             
             self.button_file.append(text_file)
             #print('Button-{} will be created'.format(self.num))
@@ -411,7 +440,7 @@ class Ui_MainWindow(object):
             address = address[-1]
             address = address.split(".")
             self.number_name_toolButton[str(address[0])] = self.num  #dic for address and number
-            print(self.number_name_toolButton)
+            #print(self.number_name_toolButton)
             button_tool = QPushButton(str(address[0]) , self.groupBox_tool)
             button_tool.clicked.connect(lambda : self.show_text(self.button_file[ self.number_name_toolButton[button_tool.text()] - 1]))
             #button2.move(100, 200)
@@ -421,23 +450,20 @@ class Ui_MainWindow(object):
         except:
             pass
 
+    def analysis_pic(self, address):
+        print("enter analysis_pic")
+        img = address
+        
+        #print(text_file)
+        self.show_picture(img)
+        self.button_file.append(img)
+        print('Button-{} will be created'.format(self.num))
+        button2 = QPushButton(str(self.num) , self.groupBox_tool)
+        button2.clicked.connect(lambda : self.show_picture(self.button_file[int(button2.text()) - 1]))
+#        button2.move(100, 200)
+        self.layout_tool.addWidget(button2)
+        self.num += 1
 
-    def change_map(self, new_map):
-        if new_map == "text":
-            self.map_option = self.show_text
-
-        if new_map == "pic":
-            self.map_option = self.show_picture
-
-        if new_map == "table":
-            self.map_option = self.show_table
-
-        if new_map == "chart":
-            self.map_option = self.show_chart 
-
-        self.currunt_map = new_map
-
-        self.check_previous()        
 
     def show_text(self,text_file):
         #print('here')

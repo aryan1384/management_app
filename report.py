@@ -257,9 +257,11 @@ class Ui_MainWindow(object):
     def functionOpen_other(self):
         pass
 
-    def show_picture(self,img):
+    '''def show_picture(self,img):
         self.label_detail.setPixmap(QtGui.QPixmap(img))
         self.label_detail.setGeometry(QtCore.QRect(0, 0, width_details, height_details))
+    '''
+
 
     def functionOpen_file(self):
         print('Open file clicked')
